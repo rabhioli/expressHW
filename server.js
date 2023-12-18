@@ -1,4 +1,4 @@
-git // Import the Express.js library
+
 const express = require('express');
 
 // Create an Express application
@@ -24,3 +24,11 @@ app.get("/greeting/:name?", (req, res) => {
   const greeting = `Wow hello there ${name}`
   res.send(greeting)
 })
+
+// Tip calculator route
+app.get('/tip/:total/:tipPercentage', (req, res) => {
+  const total = parseFloat(req.params.total);
+  const tipPercentage = parseFloat(req.params.tipPercentage);
+  const tipAmount = total * (tipPercentage / 100);
+  res.send(`Your tip amount is: $${tipAmount.toFixed(2)}`);
+});
