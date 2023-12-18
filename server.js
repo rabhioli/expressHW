@@ -49,3 +49,24 @@ app.get('/magic/:question', (req, res) => {
   res.send (` <h1>${question}?<h1>
   <h2>Magic Eight Ball says: ${answer}</h2>`)
 })
+
+// Define a route for the dynamic number of bottles
+app.get('/:number_of_bottles', (req, res) => {
+  const bottlesLeft = parseInt(req.params.number_of_bottles);
+
+  if (isNaN(bottlesLeft) || bottlesLeft < 0) {
+    res.status(400).send('Invalid input. Please provide a valid number of bottles.');
+    return;
+  }
+
+  let message = `<p>${bottlesLeft} Bottle${bottlesLeft !== 1 ? 's' : ''} of beer on the wall.</p>`;
+
+  if (bottlesLeft > 0) {
+    message += `<a href="/${bottlesLeft - 1}">Take one down, pass it around</a>`;
+  }
+
+  // Add a link to start over
+  message += `<br><a href="/">Start over</a>`;
+
+  res.send(message);
+});
